@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 제어문 - 프로그램의 흐름을 제어한다</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 60px;
+            text-align: center;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            text-align: left;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 0;
+            border-radius: 10px;
+            font-family: 'Fira Mono', 'Consolas', 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: left;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .code-block pre {
+            margin: 0;
+            padding: 20px;
+            background: none;
+            color: inherit;
+            border-radius: inherit;
+            overflow-x: auto;
+        }
+        /* Prism.js VSCode-like theme override (optional, can be customized) */
+        /* ...you can add more custom styles here if needed... */
+    </style>
+    <!-- Prism.js CSS for VSCode-like syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>🐍 Python 제어문</h1>
+            <h2>프로그램의 흐름을 제어한다</h2>
+            <div class="highlight">
+                <p>조건에 따라 다르게 동작하고, 반복적으로 작업을 수행하는 방법을 배워보자!</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Why Control Flow? -->
+        <div class="slide">
+            <h2>🤔 왜 제어문을 사용해야 할까?</h2>
+            <ul>
+                <li><strong>기본 실행:</strong> 프로그램은 위에서 아래로 순차적으로 실행</li>
+                <li><strong>실제 필요:</strong> 조건에 따라 다르게 동작해야 하는 경우가 많음</li>
+                <li><strong>반복 작업:</strong> 같은 작업을 여러 번 수행해야 할 때</li>
+                <li><strong>유연한 코드:</strong> 다양한 상황에 맞는 프로그램 작성 가능</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Types of Control Flow -->
+        <div class="slide">
+            <h2>📋 제어문의 종류</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 40px;">
+                <div class="highlight">
+                    <h3>1️⃣ 조건문</h3>
+                    <p>특정 조건에 따라 명령을 선택적으로 실행</p>
+                    <p><code>if, elif, else</code></p>
+                </div>
+                <div class="highlight">
+                    <h3>2️⃣ 반복문</h3>
+                    <p>특정 명령을 여러 번 반복 실행</p>
+                    <p><code>for, while</code></p>
+                </div>
+                <div class="highlight">
+                    <h3>3️⃣ 분기문</h3>
+                    <p>반복 흐름을 중단하거나 건너뜀</p>
+                    <p><code>break, continue</code></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Comparison Operators -->
+        <div class="slide">
+            <h2>🔍 비교 연산자</h2>
+            <table class="operator-table">
+                <tr>
+                    <th>연산자</th>
+                    <th>의미</th>
+                    <th>예시 (a=3, b=5)</th>
+                    <th>결과</th>
+                </tr>
+                <tr><td>==</td><td>같다</td><td>a == b</td><td>False</td></tr>
+                <tr><td>!=</td><td>같지 않다</td><td>a != b</td><td>True</td></tr>
+                <tr><td>&gt;</td><td>크다</td><td>a &gt; b</td><td>False</td></tr>
+                <tr><td>&lt;</td><td>작다</td><td>a &lt; b</td><td>True</td></tr>
+                <tr><td>&gt;=</td><td>크거나 같다</td><td>a &gt;= b</td><td>False</td></tr>
+                <tr><td>&lt;=</td><td>작거나 같다</td><td>a &lt;= b</td><td>True</td></tr>
+            </table>
+        </div>
+
+        <!-- Slide 5: Logical Operators -->
+        <div class="slide">
+            <h2>🧠 논리 연산자</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 40px;">
+                <div class="highlight">
+                    <h3>and</h3>
+                    <p>두 조건이 <strong>모두 참</strong>일 때만 참</p>
+                    <div class="code-block">True and True → True<br>True and False → False</div>
+                </div>
+                <div class="highlight">
+                    <h3>or</h3>
+                    <p><strong>둘 중 하나</strong>라도 참이면 참</p>
+                    <div class="code-block">True or False → True<br>False or False → False</div>
+                </div>
+                <div class="highlight">
+                    <h3>not</h3>
+                    <p>조건의 참/거짓을 <strong>반대로</strong></p>
+                    <div class="code-block">not True → False<br>not False → True</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: If Statement -->
+        <div class="slide">
+            <h2>🎯 조건문 (if문)</h2>
+            <div class="highlight">
+                <p><strong>if문이란?</strong>  
+                조건이 참(True)일 때만 특정 코드를 실행하도록 하는 제어문입니다.<br>
+                조건에 따라 프로그램의 흐름을 분기할 수 있습니다.</p>
+            </div>
+            <div class="code-block">
+<pre><code class="language-python">score = 85
+if score >= 90:
+    print("A학점")
+elif score >= 80:
+    print("B학점")
+else:
+    print("C학점")</code></pre>
+            </div>
+            <div class="example-output">출력: B학점</div>
+            <ul style="margin-top: 30px;">
+                <li><code>if</code>: 첫 번째 조건을 검사</li>
+                <li><code>elif</code>: 위 조건이 거짓이면 다음 조건 검사</li>
+                <li><code>else</code>: 모든 조건이 거짓이면 실행</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: While Loop -->
+        <div class="slide">
+            <h2>🔄 while문</h2>
+            <div class="highlight">
+                <p><strong>조건이 참인 동안</strong> 반복 실행</p>
+            </div>
+            <div class="code-block">
+<pre><code class="language-python">i = 1
+while i <= 5:
+    print(i)
+    i += 1</code></pre>
+            </div>
+            <div class="example-output">
+출력:<br>
+1<br>
+2<br>
+3<br>
+4<br>
+5
+            </div>
+        </div>
+
+        <!-- Slide 8: For Loop -->
+        <div class="slide">
+            <h2>🔁 for문</h2>
+            <div class="highlight">
+                <p><strong>시퀀스의 요소</strong>를 하나씩 꺼내며 반복</p>
+            </div>
+            <div class="code-block">
+<pre><code class="language-python">numbers = [1, 2, 3, 4, 5]
+for num in numbers:
+    print(num)</code></pre>
+            </div>
+            <div class="example-output">
+출력:<br>
+1<br>
+2<br>
+3<br>
+4<br>
+5
+            </div>
+        </div>
+
+        <!-- Slide 9: Break and Continue -->
+        <div class="slide">
+            <h2>🚦 분기문 (break, continue)</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3>break - 반복 종료</h3>
+                    <div class="code-block">
+<pre><code class="language-python">for i in range(1, 10):
+    if i == 5:
+        break
+    print(i)</code></pre>
+                    </div>
+                    <div class="example-output">출력: 1, 2, 3, 4</div>
+                </div>
+                <div>
+                    <h3>continue - 건너뛰기</h3>
+                    <div class="code-block">
+<pre><code class="language-python">for i in range(1, 6):
+    if i == 3:
+        continue
+    print(i)</code></pre>
+                    </div>
+                    <div class="example-output">출력: 1, 2, 4, 5</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Summary -->
+        <div class="slide">
+            <h2>📝 정리</h2>
+            <div class="highlight">
+                <h3>🎯 제어문으로 할 수 있는 것들</h3>
+                <ul style="text-align: left; margin-top: 20px;">
+                    <li><strong>조건문:</strong> 상황에 따라 다른 동작 실행</li>
+                    <li><strong>반복문:</strong> 같은 작업을 효율적으로 반복</li>
+                    <li><strong>분기문:</strong> 반복의 흐름을 세밀하게 제어</li>
+                </ul>
+            </div>
+            <p style="font-size: 1.5rem; color: #e74c3c; margin-top: 30px;">
+                <strong>프로그램의 흐름을 자유자재로 조절하여<br>
+                복잡한 문제도 단계별로 해결할 수 있다! 🚀</strong>
+            </p>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ 이전</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">다음 ▶</button>
+    </div>
+
+    <!-- Prism.js JS -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = index + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex < 0) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            showSlide(currentSlideIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
